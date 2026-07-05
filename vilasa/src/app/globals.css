@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0B0A08;
+  --color-ivory: #F3ECDD;
+  --color-gold: #C6A15B;
+  --color-gold-deep: #8B6F3E;
+  --color-dusk: #1B2A3A;
+  --color-ember: #9C5B3C;
+  --color-glass-dark: rgba(243, 236, 221, 0.08);
+  --color-glass-light: rgba(11, 10, 8, 0.55);
+
+  --font-serif: var(--font-fraunces), serif;
+  --font-sans: var(--font-inter), sans-serif;
+
+  --ease-vilasa: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-settle: 1400ms var(--ease-vilasa);
+}
+
+:root {
+  --background: #0B0A08;
+  --foreground: #F3ECDD;
+}
+
+body {
+  background: radial-gradient(circle at 50% -20%, #251e12 0%, var(--background) 80%);
+  background-attachment: fixed;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .jharokha-mask {
+    mask-image: url('/jharokha-mask.svg');
+    mask-size: cover;
+    mask-position: center;
+  }
+}
