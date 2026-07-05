@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   }));
 
   const result = streamText({
-    model: google('gemini-1.5-flash'),
+    model: google('gemini-3.5-flash'),
     messages: coreMessages,
     system: `You are the digital concierge for Vilasa Udaipur, a top 0.1% ultra-luxury resort. 
     You must answer politely, concisely, and elegantly. 
