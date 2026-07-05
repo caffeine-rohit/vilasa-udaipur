@@ -15,7 +15,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // approximate cubic-bezier
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
+      syncTouch: false, // Ensure native touch scrolling on mobile
     });
 
     // Synchronize GSAP ScrollTrigger with Lenis

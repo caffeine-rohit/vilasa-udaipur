@@ -14,58 +14,59 @@ export default function Home() {
   useEffect(() => {
     if (!containerRef.current) return;
     
-    // 3D Parallax effect on bento grid and images
-    const elements3D = gsap.utils.toArray<HTMLElement>('.parallax-3d');
+    let mm = gsap.matchMedia();
     
-    elements3D.forEach((el) => {
-      gsap.fromTo(el,
-        { 
-          y: 100, 
-          rotationX: 10,
-          scale: 0.95,
-          opacity: 0.8
-        },
-        {
-          y: 0,
-          rotationX: 0,
-          scale: 1,
-          opacity: 1,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top bottom-=10%",
-            end: "center center",
-            scrub: 1,
+    mm.add("(min-width: 768px)", () => {
+      // 3D Parallax effect on bento grid and images
+      const elements3D = gsap.utils.toArray<HTMLElement>('.parallax-3d');
+      
+      elements3D.forEach((el) => {
+        gsap.fromTo(el,
+          { 
+            y: 100, 
+            rotationX: 10,
+            scale: 0.95,
+            opacity: 0.8
+          },
+          {
+            y: 0,
+            rotationX: 0,
+            scale: 1,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top bottom-=10%",
+              end: "center center",
+              scrub: 1,
+            }
           }
-        }
-      );
-    });
+        );
+      });
 
-    // Subtler parallax for text and floating elements
-    const elementsFloat = gsap.utils.toArray<HTMLElement>('.parallax-float');
-    
-    elementsFloat.forEach((el) => {
-      gsap.fromTo(el,
-        { y: 50 },
-        {
-          y: -50,
-          ease: "none",
-          scrollTrigger: {
-            trigger: el,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5,
+      // Subtler parallax for text and floating elements
+      const elementsFloat = gsap.utils.toArray<HTMLElement>('.parallax-float');
+      
+      elementsFloat.forEach((el) => {
+        gsap.fromTo(el,
+          { y: 50 },
+          {
+            y: -50,
+            ease: "none",
+            scrollTrigger: {
+              trigger: el,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 1.5,
+            }
           }
-        }
-      );
-    });
+        );
+      });
 
-    // Horizontal scroll for Sanctuaries (Desktop Only)
-    const sanctuariesSection = document.querySelector('.sanctuaries-section');
-    const sanctuariesScroll = document.querySelector('.sanctuaries-scroll');
-    if (sanctuariesSection && sanctuariesScroll) {
-      let mm = gsap.matchMedia();
-      mm.add("(min-width: 768px)", () => {
+      // Horizontal scroll for Sanctuaries (Desktop Only)
+      const sanctuariesSection = document.querySelector('.sanctuaries-section');
+      const sanctuariesScroll = document.querySelector('.sanctuaries-scroll');
+      if (sanctuariesSection && sanctuariesScroll) {
         // The distance to translate: total width of cards minus the visible width of the right column
         const scrollDistance = sanctuariesScroll.scrollWidth - (window.innerWidth * 0.666) + 100; // 100px padding
         
@@ -80,10 +81,11 @@ export default function Home() {
             // Removed pin: true! Using CSS sticky instead for massive performance boost.
           }
         });
-      });
-    }
+      }
+    });
 
     return () => {
+      mm.revert();
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
@@ -113,9 +115,9 @@ export default function Home() {
       </section>
 
       {/* 3. Suites & Villas - Premium Horizontal Scroll */}
-      <section className="sanctuaries-section relative h-[250vh]">
+      <section className="sanctuaries-section relative h-auto md:h-[250vh]">
         {/* Sticky container that stays on screen while we scroll the 250vh track */}
-        <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center bg-ink border-y border-gold/20">
+        <div className="relative md:sticky top-0 h-auto md:h-screen overflow-hidden flex flex-col justify-center bg-ink border-y border-gold/20 py-24 md:py-0">
           {/* Luxurious Golden Blend Background */}
           <div className="absolute inset-0 bg-ink"></div>
           <div className="absolute inset-0 bg-gradient-to-br from-gold-deep/20 via-ink to-ink"></div>
@@ -141,7 +143,7 @@ export default function Home() {
             {/* The outer bounded container that clips the images so they NEVER overlap the left text column */}
             <div className="md:w-2/3 overflow-hidden relative z-10 flex items-center">
               {/* The inner track that translates horizontally */}
-              <div className="sanctuaries-scroll flex gap-8 px-6 md:px-12 pb-12 w-max">
+              <div className="sanctuaries-scroll flex gap-8 px-6 md:px-12 pb-12 w-full md:w-max overflow-x-auto snap-x snap-mandatory md:overflow-visible hide-scrollbar">
                 {[
               { name: "Lake View Palace Suite", img: "/media/images/suites-page/lake_view_palace_suite.jpeg", price: "45,000" },
               { name: "Haveli Suite", img: "/media/images/suites-page/haveli_suite_bedroom.jpeg", price: "35,000" },
