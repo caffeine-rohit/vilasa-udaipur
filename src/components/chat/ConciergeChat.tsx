@@ -8,13 +8,13 @@ import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
 export function ConciergeChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const { messages, sendMessage, isLoading } = useChat();
+  const { messages, sendMessage, status } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
-    sendMessage(input); // AI SDK v4 sendMessage
+    if (!input.trim() || status === 'streaming' || status === 'submitted') return;
+    sendMessage({ content: input, role: 'user' });
     setInput('');
   };
 
@@ -99,7 +99,7 @@ export function ConciergeChat() {
                   </motion.div>
                 ))
               )}
-              {isLoading && (
+              {(status === 'streaming' || status === 'submitted') && (
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -126,7 +126,7 @@ export function ConciergeChat() {
                 />
                 <button
                   type="submit"
-                  disabled={isLoading || !input.trim()}
+                  disabled={status === 'streaming' || status === 'submitted' || !input.trim()}
                   className="absolute right-2 p-2 text-gold hover:text-ivory disabled:opacity-50 transition-colors bg-ink rounded-full"
                 >
                   <Send className="w-4 h-4" />
