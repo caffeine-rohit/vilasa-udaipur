@@ -7,9 +7,17 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
+  // Convert UIMessage array (v4 schema) to CoreMessage array
+  const coreMessages = messages.map((m: any) => ({
+    role: m.role,
+    content: m.parts 
+      ? m.parts.filter((p: any) => p.type === 'text').map((p: any) => p.text).join('') 
+      : m.content
+  }));
+
   const result = streamText({
     model: google('gemini-1.5-flash'),
-    messages,
+    messages: coreMessages,
     system: `You are the digital concierge for Vilasa Udaipur, a top 0.1% ultra-luxury resort. 
     You must answer politely, concisely, and elegantly. 
     If the user asks questions about booking, tell them to use the Reserve option in the menu.

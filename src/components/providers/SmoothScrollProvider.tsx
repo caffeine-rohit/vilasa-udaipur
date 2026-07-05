@@ -16,10 +16,9 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
     // Initialize Lenis
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // approximate cubic-bezier
+      lerp: 0.08, // Buttery smooth continuous interpolation
       smoothWheel: true,
-      wheelMultiplier: 1,
+      wheelMultiplier: 1.2, // Slightly faster wheel for better responsiveness
       syncTouch: false,
     });
 
