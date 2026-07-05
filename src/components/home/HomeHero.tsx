@@ -42,10 +42,10 @@ export function HomeHero() {
       {
         y: 0,
         opacity: 1,
-        duration: 1.5,
-        stagger: 0.1,
-        ease: 'power4.out',
-        delay: 0.5,
+        duration: 2.5,
+        stagger: 0.15,
+        ease: 'expo.out',
+        delay: 0.8,
       }
     );
 

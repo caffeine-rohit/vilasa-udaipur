@@ -4,20 +4,22 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Magnetic } from '@/components/ui/Magnetic';
 
 const menuItems = [
-  { name: 'THE LAKE', path: '/' },
-  { name: 'THE PALACE', path: '/palace' },
-  { name: 'SUITES & VILLAS', path: '/suites' },
-  { name: 'EXPERIENCES', path: '/experiences' },
-  { name: 'CELEBRATIONS', path: '/celebrations' },
-  { name: 'JOURNAL', path: '/journal' },
-  { name: 'RESERVE', path: '/reserve' },
+  { name: 'THE LAKE', path: '/', image: '/media/hero-stills/Resort_at_dusk_reflecting_lake_202607041810.jpeg' },
+  { name: 'THE PALACE', path: '/palace', image: '/media/hero-stills/Royal_palace_lobby_vaulted_ceilings_202607050005.jpeg' },
+  { name: 'SUITES & VILLAS', path: '/suites', image: '/media/images/suites-page/lake_view_palace_suite.jpeg' },
+  { name: 'EXPERIENCES', path: '/experiences', image: '/media/hero-stills/Spa_sanctuary_candlelight_rose_p._202607050009.jpeg' },
+  { name: 'CELEBRATIONS', path: '/celebrations', image: '/media/hero-stills/Dining_terrace_overlooking_lake_2K_202607050012.jpeg' },
+  { name: 'JOURNAL', path: '/journal', image: '/media/hero-stills/Silver_tray_with_chai_cups_202607050007 (1).jpeg' },
+  { name: 'RESERVE', path: '/reserve', image: '/media/hero-stills/Crystal_cocktail_glass_pool_edge_202607050010.jpeg' },
 ];
 
 export function MenuOverlay() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hoveredImage, setHoveredImage] = useState<string | null>(null);
   const pathname = usePathname();
   const isLightMode = pathname === '/journal' || pathname === '/suites';
 
@@ -56,21 +58,24 @@ export function MenuOverlay() {
         {/* Right: Actions */}
         <div className="flex items-center gap-8 pointer-events-auto">
 
-          <Link
-            href="/reserve"
-            className={`hidden md:block border px-6 py-2.5 font-sans text-[10px] uppercase tracking-[0.2em] transition-all duration-500
-              ${isLightMode
-                ? 'border-ink text-ink hover:bg-ink hover:text-ivory'
-                : 'border-gold/50 text-ivory hover:bg-gold hover:text-ink'}`}
-          >
-            Reserve
-          </Link>
+          <Magnetic intensity={0.2}>
+            <Link
+              href="/reserve"
+              className={`hidden md:block border px-6 py-2.5 font-sans text-[10px] uppercase tracking-[0.2em] transition-all duration-500 cursor-none
+                ${isLightMode
+                  ? 'border-ink text-ink hover:bg-ink hover:text-ivory'
+                  : 'border-gold/50 text-ivory hover:bg-gold hover:text-ink'}`}
+            >
+              Reserve
+            </Link>
+          </Magnetic>
 
           {/* Menu Toggle Glyph */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="w-12 h-12 flex flex-col justify-center items-center gap-1.5 z-50 hover:scale-110 transition-transform duration-500"
-          >
+          <Magnetic intensity={0.3}>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="w-12 h-12 flex flex-col justify-center items-center gap-1.5 z-50 transition-transform duration-500 cursor-none"
+            >
             <motion.span
               animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
               className={`w-8 h-px block shadow-sm ${isLightMode && !isOpen ? 'bg-ink shadow-ink/20' : 'bg-gold shadow-gold/50'}`}
@@ -83,7 +88,8 @@ export function MenuOverlay() {
               animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
               className={`w-8 h-px block shadow-sm ${isLightMode && !isOpen ? 'bg-ink shadow-ink/20' : 'bg-gold shadow-gold/50'}`}
             />
-          </button>
+            </button>
+          </Magnetic>
         </div>
       </motion.div>
 
@@ -97,14 +103,19 @@ export function MenuOverlay() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="fixed inset-0 z-40 bg-ink/90 backdrop-blur-[30px] flex items-center justify-end pr-12 md:pr-32"
           >
-            {/* The background slow panning blurred still of the lake */}
-            <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none opacity-20 mix-blend-screen">
-              <motion.div
-                initial={{ scale: 1.1, x: '-5%' }}
-                animate={{ scale: 1.1, x: '0%' }}
-                transition={{ duration: 20, repeat: Infinity, repeatType: 'mirror', ease: 'linear' }}
-                className="w-full h-full bg-[url('/media/images/Resort_at_dusk_reflecting_lake_202607041810.jpeg')] bg-cover bg-center"
-              />
+            {/* The background immersive preview image */}
+            <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none opacity-30 mix-blend-screen transition-all duration-1000">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={hoveredImage || 'default'}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url('${hoveredImage || '/media/images/Resort_at_dusk_reflecting_lake_202607041810.jpeg'}')` }}
+                />
+              </AnimatePresence>
             </div>
 
             <nav className="flex flex-col items-end gap-6 md:gap-8">
@@ -119,7 +130,9 @@ export function MenuOverlay() {
                     <Link
                       href={item.path}
                       onClick={() => setIsOpen(false)}
-                      className="text-4xl md:text-6xl lg:text-7xl font-serif text-ivory hover:text-gold transition-colors duration-500 block text-right hover:-translate-x-4 transform-gpu"
+                      onMouseEnter={() => setHoveredImage(item.image)}
+                      onMouseLeave={() => setHoveredImage(null)}
+                      className="text-4xl md:text-6xl lg:text-7xl font-serif text-ivory hover:text-gold transition-colors duration-500 block text-right hover:-translate-x-4 transform-gpu cursor-none"
                     >
                       {item.name}
                     </Link>

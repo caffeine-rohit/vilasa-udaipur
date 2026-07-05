@@ -1,0 +1,4 @@
+{"timestamp":"16:07:11.193","source":"Browser","level":"ERROR","message":"Failed to fetch RSC payload for http://localhost:3000/reserve. Falling back to browser navigation. {}"}
+{"timestamp":"16:07:11.193","source":"Browser","level":"ERROR","message":"Failed to fetch RSC payload for http://localhost:3000/reserve. Falling back to browser navigation. {}"}
+{"timestamp":"16:07:11.990","source":"Browser","level":"ERROR","message":"Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}"}
+{"timestamp":"16:07:11.990","source":"Browser","level":"ERROR","message":"Failed to fetch RSC payload for http://localhost:3000/. Falling back to browser navigation. {}"}
