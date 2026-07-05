@@ -151,16 +151,13 @@ export default function Home() {
               { name: "Private Lake Villa", img: "/media/images/suites-page/private_lake_villa.jpeg", price: "1,20,000" },
             ].map((suite) => (
               <Link href={`/suites#${suite.name.replace(/\s+/g, '-').toLowerCase()}`} key={suite.name} className="flex-none w-[85vw] md:w-[35vw] group snap-center cursor-pointer">
-                {/* Image Container */}
                 <div className="relative aspect-[3/4] mb-6 overflow-hidden border border-gold/10 bg-glass-dark">
                   <Image 
                     src={suite.img} 
                     alt={suite.name} 
                     fill 
-                    className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
+                    className="object-cover transition-transform duration-1000 group-hover:scale-105" 
                   />
-                  {/* Subtle inner shadow for depth */}
-                  <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(11,10,8,0.8)] pointer-events-none"></div>
                 </div>
                 
                 {/* Typography details */}

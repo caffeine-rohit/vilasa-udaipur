@@ -9,13 +9,18 @@ gsap.registerPlugin(ScrollTrigger);
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    // Completely disable smooth scroll on mobile to guarantee raw 60fps native performance
+    if (window.innerWidth < 768) {
+      return;
+    }
+
     // Initialize Lenis
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // approximate cubic-bezier
       smoothWheel: true,
       wheelMultiplier: 1,
-      syncTouch: false, // Ensure native touch scrolling on mobile
+      syncTouch: false,
     });
 
     // Synchronize GSAP ScrollTrigger with Lenis

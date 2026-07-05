@@ -18,6 +18,9 @@ export function CustomCursor() {
   const cursorY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    // Disable entirely on mobile to save performance
+    if (window.innerWidth < 768) return;
+
     const moveCursor = (e: MouseEvent) => {
       mouseX.set(e.clientX - 16); // Center the 32px cursor
       mouseY.set(e.clientY - 16);
