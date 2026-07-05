@@ -62,7 +62,8 @@ export function MenuOverlay() {
             <Link
               href="/reserve"
               className={`hidden md:block border px-6 py-2.5 font-sans text-[10px] uppercase tracking-[0.2em] transition-all duration-500 cursor-none
-                ${isLightMode
+                ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}
+                ${isLightMode && !isOpen
                   ? 'border-ink text-ink hover:bg-ink hover:text-ivory'
                   : 'border-gold/50 text-ivory hover:bg-gold hover:text-ink'}`}
             >
