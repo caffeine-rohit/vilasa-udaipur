@@ -14,7 +14,7 @@ export function ConciergeChat() {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || status === 'streaming' || status === 'submitted') return;
-    sendMessage({ content: input, role: 'user' });
+    sendMessage({ parts: [{ type: 'text', text: input }] });
     setInput('');
   };
 
@@ -94,7 +94,9 @@ export function ConciergeChat() {
                           : 'bg-glass-dark text-ivory border border-gold/10 rounded-tl-sm'
                         }`}
                     >
-                      {m.content}
+                      {m.parts?.map((part, i) => (
+                        part.type === 'text' ? <span key={i}>{part.text}</span> : null
+                      ))}
                     </div>
                   </motion.div>
                 ))
