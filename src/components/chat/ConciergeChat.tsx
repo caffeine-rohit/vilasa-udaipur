@@ -8,7 +8,7 @@ import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
 export function ConciergeChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const { messages, sendMessage, status } = useChat();
+  const { messages, sendMessage, status, error } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -94,9 +94,9 @@ export function ConciergeChat() {
                           : 'bg-glass-dark text-ivory border border-gold/10 rounded-tl-sm'
                         }`}
                     >
-                      {m.parts?.map((part, i) => (
+                      {m.parts ? m.parts.map((part, i) => (
                         part.type === 'text' ? <span key={i}>{part.text}</span> : null
-                      ))}
+                      )) : (m as any).content}
                     </div>
                   </motion.div>
                 ))
@@ -111,6 +111,17 @@ export function ConciergeChat() {
                     <span className="w-1.5 h-1.5 rounded-full bg-gold/50 animate-bounce" />
                     <span className="w-1.5 h-1.5 rounded-full bg-gold/50 animate-bounce [animation-delay:0.2s]" />
                     <span className="w-1.5 h-1.5 rounded-full bg-gold/50 animate-bounce [animation-delay:0.4s]" />
+                  </div>
+                </motion.div>
+              )}
+              {error && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex justify-center mt-4"
+                >
+                  <div className="bg-red-500/10 text-red-400 text-xs px-4 py-2 rounded-full border border-red-500/20 text-center">
+                    Connection Error. Please ensure GOOGLE_GENERATIVE_AI_API_KEY is set in Vercel.
                   </div>
                 </motion.div>
               )}
