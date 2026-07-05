@@ -22,5 +22,5 @@ export async function POST(req: Request) {
     Keep responses brief (1-3 short sentences). Match the luxurious, bespoke tone of the resort.`,
   });
 
-  return result.toTextStreamResponse();
+  return result.toUIMessageStreamResponse();
 }
