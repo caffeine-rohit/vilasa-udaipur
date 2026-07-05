@@ -175,17 +175,14 @@ export function HomeHero() {
         </div>
       </div>
 
-      {/* Down chevron */}
-      <div className="scroll-chevron absolute bottom-12 left-1/2 -translate-x-1/2" style={{ zIndex: IMAGES.length + 10 }}>
-        <svg
-          className="w-6 h-6 text-gold animate-pulse drop-shadow-md"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-        </svg>
+      {/* Minimal Scroll Indicator */}
+      <div className="scroll-chevron absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-70" style={{ zIndex: IMAGES.length + 10 }}>
+        <span className="font-sans text-[9px] uppercase tracking-[0.3em] text-ivory">Scroll</span>
+        <div className="w-[1px] h-16 bg-gold/30 overflow-hidden relative">
+          <div className="w-full h-full bg-gold absolute top-0 animate-[scroll-down_1.5s_ease-in-out_infinite]" />
+        </div>
       </div>
+
     </div>
   );
 }

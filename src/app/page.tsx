@@ -133,6 +133,14 @@ export default function Home() {
                 <p className="font-sans text-ivory/80 text-lg mb-8 max-w-sm drop-shadow-sm">
                   Thirty exquisite keys. Each suite a private haven of hand-carved marble, antique silver, and uninterrupted views of the lake.
                 </p>
+                
+                <div className="flex md:hidden items-center gap-4 mb-8 opacity-70">
+                  <span className="font-sans text-[9px] uppercase tracking-[0.3em] text-ivory">Swipe</span>
+                  <div className="w-16 h-[1px] bg-gold/30 overflow-hidden relative">
+                    <div className="w-full h-full bg-gold absolute left-0 animate-[scroll-right_1.5s_ease-in-out_infinite]" />
+                  </div>
+                </div>
+
                 <Link href="/suites" className="hidden md:inline-flex font-sans text-[11px] uppercase tracking-[0.2em] text-gold border-b border-gold/30 pb-1 hover:border-gold transition-colors w-fit">
                   Explore All Suites
                 </Link>
