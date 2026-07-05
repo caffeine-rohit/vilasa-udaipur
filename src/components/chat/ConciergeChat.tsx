@@ -8,13 +8,13 @@ import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
 export function ConciergeChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
-  const { messages, append, isLoading } = useChat();
+  const { messages, sendMessage, isLoading } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
-    append({ role: 'user', content: input });
+    sendMessage(input); // AI SDK v4 sendMessage
     setInput('');
   };
 
