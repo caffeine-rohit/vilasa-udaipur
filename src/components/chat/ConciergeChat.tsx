@@ -7,8 +7,16 @@ import { MessageSquare, X, Send, Sparkles } from 'lucide-react';
 
 export function ConciergeChat() {
   const [isOpen, setIsOpen] = useState(false);
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat();
+  const [input, setInput] = useState('');
+  const { messages, append, isLoading } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    append({ role: 'user', content: input });
+    setInput('');
+  };
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -109,10 +117,10 @@ export function ConciergeChat() {
 
             {/* Input Area */}
             <div className="p-4 border-t border-gold/10 bg-glass-dark">
-              <form onSubmit={handleSubmit} className="relative flex items-center">
+              <form onSubmit={handleFormSubmit} className="relative flex items-center">
                 <input
                   value={input}
-                  onChange={handleInputChange}
+                  onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask a question..."
                   className="w-full bg-ink/50 border border-gold/20 rounded-full py-3 pl-5 pr-12 text-sm text-ivory placeholder:text-ivory/30 focus:outline-none focus:border-gold/50 transition-colors"
                 />
