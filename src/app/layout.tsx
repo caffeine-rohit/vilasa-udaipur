@@ -6,6 +6,7 @@ import { ReserveProvider } from "@/store/ReserveContext";
 import { LoadingGate } from "@/components/ui/LoadingGate";
 import { MenuOverlay } from "@/components/layout/MenuOverlay";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { ConciergeChat } from '@/components/chat/ConciergeChat';
 
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -40,6 +41,7 @@ export default function RootLayout({
 
             <LoadingGate />
             <MenuOverlay />
+            <ConciergeChat />
             {children}
           </SmoothScrollProvider>
         </ReserveProvider>
